@@ -46,6 +46,12 @@
                 font-size: 18px;
                 color: #333;
             }
+            .loading {
+                display: none;
+                margin-top: 20px;
+                font-size: 18px;
+                color: #333;
+            }
         </style>
     </head>
     <body>
@@ -53,6 +59,7 @@
             <h1>Check Khodam</h1>
             <input type="text" id="nameInput" placeholder="Masukkan nama anda">
             <button onclick="generateKhodam()">Check</button>
+            <div class="loading" id="loadingMessage">Loading...</div>
             <div class="khodam-result" id="khodamResult"></div>
         </div>
 
@@ -64,34 +71,45 @@
                     return;
                 }
 
-                const khodams = [
-                    { name: "Abdul Qodir", description: "Khodam pelindung yang kuat, dikenal karena ketangguhannya dalam melindungi pemiliknya dari bahaya." },
-                    { name: "Al-Barq", description: "Khodam yang memiliki kekuatan kilat, memberikan kecepatan dan ketangkasan luar biasa." },
-                    { name: "Nur Cahaya", description: "Khodam yang memancarkan energi penyembuhan, mampu menyembuhkan luka fisik dan emosional." },
-                    { name: "Sang Penakluk", description: "Khodam yang dikenal karena kekuatan dan keberaniannya, membantu dalam mengatasi rintangan besar." },
-                    { name: "Dewi Sri", description: "Khodam kesuburan dan kekayaan, dikenal membawa keberuntungan dan rejeki melimpah." },
-                    { name: "Raja Pukat", description: "Khodam penguasa air, memberikan perlindungan dari bencana air dan membawa ketenangan." },
-                    { name: "Putri Duyung", description: "Khodam yang memberikan pesona dan daya tarik, dikenal dalam hal meningkatkan aura positif pemiliknya." },
-                    { name: "Bayu Angin", description: "Khodam yang menguasai elemen angin, memberikan kelincahan dan kemampuan beradaptasi yang tinggi." },
-                    { name: "Harimau Putih", description: "Khodam yang dikenal karena keberanian dan kekuatan, memberikan perlindungan dari roh jahat." },
-                    { name: "Naga Merah", description: "Khodam dengan kekuatan api, memberikan semangat dan energi yang berlimpah." },
-                    { name: "Bidadari Surga", description: "Khodam dengan pesona dan keindahan, memberikan karisma dan daya tarik." },
-                    { name: "Elang Hitam", description: "Khodam pengawas, membantu dalam mengamati dan memberikan wawasan mendalam." },
-                    { name: "Sri Rama", description: "Khodam yang membawa keberanian dan keadilan, membantu dalam mengatasi ketidakadilan." },
-                    { name: "Dewi Saraswati", description: "Khodam ilmu pengetahuan dan seni, membantu dalam meningkatkan kreativitas dan pengetahuan." },
-                    { name: "Ratu Pantai Selatan", description: "Khodam penguasa laut selatan, memberikan perlindungan dan keberuntungan di laut." },
-                    { name: "Sunan Kalijaga", description: "Khodam dengan kebijaksanaan dan pengetahuan spiritual yang mendalam, membantu dalam perjalanan spiritual." },
-                    { name: "Pangeran Diponegoro", description: "Khodam pejuang yang membawa semangat juang dan keberanian melawan ketidakadilan." },
-                    { name: "Dewi Laksmi", description: "Khodam kekayaan dan kemakmuran, membawa keberuntungan dan kesejahteraan." },
-                    { name: "Satria Piningit", description: "Khodam yang tersembunyi namun sangat kuat, memberikan perlindungan dan kekuatan luar biasa saat dibutuhkan." },
-                    { name: "Pendekar Sakti", description: "Khodam dengan kemampuan bela diri yang tinggi, memberikan kekuatan fisik dan ketangguhan." }
-                ];
-
-                const randomIndex = Math.floor(Math.random() * khodams.length);
-                const selectedKhodam = khodams[randomIndex];
-
+                const loadingMessage = document.getElementById('loadingMessage');
                 const resultDiv = document.getElementById('khodamResult');
-                resultDiv.innerHTML = `<h2>${selectedKhodam.name}</h2><p>${selectedKhodam.description}</p>`;
+
+                // Show loading message and hide previous result
+                loadingMessage.style.display = 'block';
+                resultDiv.innerHTML = '';
+
+                // Simulate a delay to show loading message
+                setTimeout(() => {
+                    const khodams = [
+                        { name: "Abdul Qodir", description: "Khodam pelindung yang kuat, dikenal karena ketangguhannya dalam melindungi pemiliknya dari bahaya." },
+                        { name: "Al-Barq", description: "Khodam yang memiliki kekuatan kilat, memberikan kecepatan dan ketangkasan luar biasa." },
+                        { name: "Nur Cahaya", description: "Khodam yang memancarkan energi penyembuhan, mampu menyembuhkan luka fisik dan emosional." },
+                        { name: "Sang Penakluk", description: "Khodam yang dikenal karena kekuatan dan keberaniannya, membantu dalam mengatasi rintangan besar." },
+                        { name: "Dewi Sri", description: "Khodam kesuburan dan kekayaan, dikenal membawa keberuntungan dan rejeki melimpah." },
+                        { name: "Raja Pukat", description: "Khodam penguasa air, memberikan perlindungan dari bencana air dan membawa ketenangan." },
+                        { name: "Putri Duyung", description: "Khodam yang memberikan pesona dan daya tarik, dikenal dalam hal meningkatkan aura positif pemiliknya." },
+                        { name: "Bayu Angin", description: "Khodam yang menguasai elemen angin, memberikan kelincahan dan kemampuan beradaptasi yang tinggi." },
+                        { name: "Harimau Putih", description: "Khodam yang dikenal karena keberanian dan kekuatan, memberikan perlindungan dari roh jahat." },
+                        { name: "Naga Merah", description: "Khodam dengan kekuatan api, memberikan semangat dan energi yang berlimpah." },
+                        { name: "Bidadari Surga", description: "Khodam dengan pesona dan keindahan, memberikan karisma dan daya tarik." },
+                        { name: "Elang Hitam", description: "Khodam pengawas, membantu dalam mengamati dan memberikan wawasan mendalam." },
+                        { name: "Sri Rama", description: "Khodam yang membawa keberanian dan keadilan, membantu dalam mengatasi ketidakadilan." },
+                        { name: "Dewi Saraswati", description: "Khodam ilmu pengetahuan dan seni, membantu dalam meningkatkan kreativitas dan pengetahuan." },
+                        { name: "Ratu Pantai Selatan", description: "Khodam penguasa laut selatan, memberikan perlindungan dan keberuntungan di laut." },
+                        { name: "Sunan Kalijaga", description: "Khodam dengan kebijaksanaan dan pengetahuan spiritual yang mendalam, membantu dalam perjalanan spiritual." },
+                        { name: "Pangeran Diponegoro", description: "Khodam pejuang yang membawa semangat juang dan keberanian melawan ketidakadilan." },
+                        { name: "Dewi Laksmi", description: "Khodam kekayaan dan kemakmuran, membawa keberuntungan dan kesejahteraan." },
+                        { name: "Satria Piningit", description: "Khodam yang tersembunyi namun sangat kuat, memberikan perlindungan dan kekuatan luar biasa saat dibutuhkan." },
+                        { name: "Pendekar Sakti", description: "Khodam dengan kemampuan bela diri yang tinggi, memberikan kekuatan fisik dan ketangguhan." }
+                    ];
+
+                    const randomIndex = Math.floor(Math.random() * khodams.length);
+                    const selectedKhodam = khodams[randomIndex];
+
+                    // Hide loading message and show result
+                    loadingMessage.style.display = 'none';
+                    resultDiv.innerHTML = `<h2>${selectedKhodam.name}</h2><p>${selectedKhodam.description}</p>`;
+                }, 2000); // 2-second delay to simulate loading
             }
         </script>
     </body>
